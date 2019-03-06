@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         m_Animator = GetComponent<Animator>();
+        GameObject.FindGameObjectWithTag("player");
     }
 
     void Update()
@@ -29,6 +31,7 @@ public class EnemyController : MonoBehaviour
 
         m_Animator.SetTrigger("Fall");
 
+        
         //m_Animator.SetFloat("speedv", speed);
     }
 }

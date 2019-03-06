@@ -11,17 +11,19 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         tmp= spawnRate;
+        GameObject zombie = Instantiate(obj2spawn, transform.position, transform.rotation) as GameObject;
+        zombie.name = "Zombie";
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         tmp -= Time.deltaTime;
         if (tmp < 0f)
         {
             GameObject zombie = Instantiate(obj2spawn, transform.position, transform.rotation)as GameObject;
             zombie.name = "Zombie";
             tmp = spawnRate;
-        }
+        }*/
     }
 }
