@@ -85,14 +85,14 @@ public class shooterController : MonoBehaviour
                     sideArmAnimation.Play("draw");
                 }
             }
-            if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("fire"))
+            if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
                 mainWeaponAnimation.Play("fire");
                 mainWeaponCharger -= 1;
                 delay += mainWeaponFireDelay;
                 Fire(150.0f);
             }
-            if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("fire"))
+            if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("Fire"))
             {
                 sideArmAnimation.Play("fire");
                 sideArmCharger -= 1;

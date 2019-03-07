@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_Animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("player");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
