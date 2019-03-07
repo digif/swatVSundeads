@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - ammunition
+  - enemy
+  - destructible
+  - environement
   layers:
   - Default
   - TransparentFX

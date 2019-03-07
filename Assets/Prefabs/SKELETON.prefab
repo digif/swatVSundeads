@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 5262887812028219126}
   m_Layer: 0
   m_Name: SKELETON
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -950,6 +950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77b8e612814cce488f6a6c228346be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 1
+  damage: 1
 --- !u!1 &1358933833218600
 GameObject:
   m_ObjectHideFlags: 0

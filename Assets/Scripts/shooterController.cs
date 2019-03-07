@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class shooterController : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class shooterController : MonoBehaviour
 
     bool isMainWeaponSelected;
 
+    public Text ammoUI;
+    public Text chargeurUI;
+    public Text lifeUI;
+
+    public AudioSource fire;
+
+    
 
     int ammo;
     int mainWeaponCharger;
@@ -92,14 +100,12 @@ public class shooterController : MonoBehaviour
             }
             if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
-                mainWeaponAnimation.Play("fire");
                 mainWeaponCharger -= 1;
                 delay = mainWeaponFireDelay;
                 Fire(150.0f);
             }
             if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("Fire"))
             {
-                sideArmAnimation.Play("fire");
                 sideArmCharger -= 1;
                 delay = sideArmFireDelay;
                 Fire(50.0f);
