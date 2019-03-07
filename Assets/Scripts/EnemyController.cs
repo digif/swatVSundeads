@@ -4,34 +4,59 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    private Animator m_Animator;
+    public int hp = 1;
+    public int damage = 1;
 
+    private Animator m_Animator;
+    private GameObject player;
     private bool startMouseRotate;
     private Vector3 prevMousePosition;
     private AnimatorClipInfo[] m_CurrentClipInfo;
     private string m_ClipName;
     private int distanceToPlayer;
+    private NavMeshAgent m_agent;
 
     void Start()
     {
+        m_agent = GetComponent<NavMeshAgent>();
         m_Animator = GetComponent<Animator>();
-        GameObject.FindGameObjectWithTag("player");
+        player = GameObject.FindGameObjectWithTag("player");
     }
 
     void Update()
     {
-        m_CurrentClipInfo = this.m_Animator.GetCurrentAnimatorClipInfo(0);
+        m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
         //Access the Animation clip name
         m_ClipName = m_CurrentClipInfo[0].clip.name;
-        if (m_ClipName == "Idle - Walk" && distanceToPlayer < 1)
+        if (m_ClipName == "Idle - Walk")
         {
-            m_Animator.SetTrigger("Attack");
+            if (distanceToPlayer < 1)
+            {
+                player.SendMessage("OnPlayerHit", damage);
+                m_Animator.SetFloat("speed", 0);
+                m_Animator.SetTrigger("Attack");
+            }
+            else
+            {
+                m_agent.SetDestination(player.transform.position);
+                m_Animator.SetFloat("speed", 1);
+            }
         }
-        m_Animator.SetTrigger("Hit");
+    }
 
-        m_Animator.SetTrigger("Fall");
+    public void OnHit()
+    {
+        hp -= 1;
+        if (hp <= 0)
+        {
+            m_Animator.SetFloat("speed", 0);
+            m_Animator.SetTrigger("Fall");
+        }
+        else
+        {
+            m_Animator.SetFloat("speed", 0);
+            m_Animator.SetTrigger("Hit");
+        }
 
-        
-        //m_Animator.SetFloat("speedv", speed);
     }
 }
