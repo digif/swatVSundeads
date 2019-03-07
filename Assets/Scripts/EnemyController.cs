@@ -13,14 +13,14 @@ public class EnemyController : MonoBehaviour
     private Vector3 prevMousePosition;
     private AnimatorClipInfo[] m_CurrentClipInfo;
     private string m_ClipName;
-    private int distanceToPlayer;
+    private float distanceToPlayer;
     private NavMeshAgent m_agent;
 
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_Animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("player");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -28,11 +28,13 @@ public class EnemyController : MonoBehaviour
         m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
         //Access the Animation clip name
         m_ClipName = m_CurrentClipInfo[0].clip.name;
-        if (m_ClipName == "Idle - Walk")
+        Debug.Log(m_ClipName);
+        if (m_ClipName == "Idle" || m_ClipName == "Walk")
         {
-            if (distanceToPlayer < 1)
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            if (distanceToPlayer < 1.5)
             {
-                player.SendMessage("OnPlayerHit", damage);
+                //player.SendMessage("OnPlayerHit", damage);
                 m_Animator.SetFloat("speed", 0);
                 m_Animator.SetTrigger("Attack");
             }

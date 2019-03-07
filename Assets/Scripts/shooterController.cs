@@ -37,17 +37,21 @@ public class shooterController : MonoBehaviour
         playerHp = 5;
         isMainWeaponSelected = true;
         mainWeaponAnimation = mainWeapon.GetComponent<Animation>();
-        sideArmAnimation = sideArm.GetComponent<Animation>();        
+        sideArmAnimation = sideArm.GetComponent<Animation>();
+        mainWeaponCharger = 30;
+        sideArmCharger = 12;
+        ammo = 120;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (delay < Time.deltaTime)
         {
             if (Input.GetButtonDown("Reload"))
             {
-                delay += ReloadDelay;
+                delay = ReloadDelay;
                 if (isMainWeaponSelected)
                 {
                     mainWeaponAnimation.Play("reload");
@@ -70,11 +74,12 @@ public class shooterController : MonoBehaviour
             }
             if (Input.GetButtonDown("ChangeWeapon"))
             {
-                delay += changeWeaponDelay;
+                Debug.Log(isMainWeaponSelected.ToString());
+                delay = changeWeaponDelay;
                 isMainWeaponSelected = !isMainWeaponSelected;
-                mainWeapon.SetActive(mainWeapon.activeInHierarchy);
-                sideArm.SetActive(sideArm.activeInHierarchy);
-                isMainWeaponSelected = !isMainWeaponSelected;
+                mainWeapon.SetActive(!mainWeapon.activeInHierarchy);
+                sideArm.SetActive(!sideArm.activeInHierarchy);
+                Debug.Log(isMainWeaponSelected.ToString());
                 if (isMainWeaponSelected)
                 {
                     mainWeaponAnimation.Play("draw");
@@ -85,21 +90,25 @@ public class shooterController : MonoBehaviour
                     sideArmAnimation.Play("draw");
                 }
             }
-            if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("fire"))
+            if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
                 mainWeaponAnimation.Play("fire");
                 mainWeaponCharger -= 1;
-                delay += mainWeaponFireDelay;
+                delay = mainWeaponFireDelay;
                 Fire(150.0f);
             }
-            if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("fire"))
+            if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("Fire"))
             {
                 sideArmAnimation.Play("fire");
                 sideArmCharger -= 1;
-                delay += sideArmFireDelay;
+                delay = sideArmFireDelay;
                 Fire(50.0f);
             }
 
+        }
+        else
+        {
+            delay -= Time.deltaTime;
         }
     }
 
@@ -135,7 +144,7 @@ public class shooterController : MonoBehaviour
         if (playerHp <= 0)
         {
             Time.timeScale = 0;
-            deathScreen.SetActive(true);
+            //deathScreen.SetActive(true);
         }
     }
 }
