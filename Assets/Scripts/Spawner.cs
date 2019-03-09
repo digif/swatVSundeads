@@ -27,9 +27,9 @@ public class Spawner : MonoBehaviour
         }
         foreach (GameObject enemy in enemies)
         {
-            string m_ClipName = enemy.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name;
-            if (m_ClipName == "fall")
+            if (enemy.GetComponent<EnemyController>().hasFallen)
             {
+                Debug.Log("beep");
                 enemies.Remove(enemy);
                 StartCoroutine("Despawn", enemy);
             }
@@ -45,6 +45,7 @@ public class Spawner : MonoBehaviour
         {
             yield return null;
         }
+        Debug.Log("boop");
         Destroy(enemy);
     }
 }

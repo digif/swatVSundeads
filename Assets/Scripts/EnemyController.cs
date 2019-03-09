@@ -16,11 +16,14 @@ public class EnemyController : MonoBehaviour
     private float distanceToPlayer;
     private NavMeshAgent m_agent;
 
+    public bool hasFallen { get; private set; }
+
     void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_Animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+        hasFallen = false;
     }
 
     void Update()
@@ -53,7 +56,9 @@ public class EnemyController : MonoBehaviour
         {
             m_Animator.SetFloat("speed", 0);
             m_Animator.SetTrigger("Fall");
-            
+            hasFallen = true;
+
+
         }
         else
         {
