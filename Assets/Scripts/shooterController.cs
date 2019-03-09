@@ -20,6 +20,9 @@ public class shooterController : MonoBehaviour
 
     public AudioSource fire;
 
+    public ParticleSystem particleMainWeapon;
+    public ParticleSystem particleSideArm;
+
     
 
     int ammo;
@@ -100,12 +103,14 @@ public class shooterController : MonoBehaviour
             }
             if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
+                fire.Play();
                 mainWeaponCharger -= 1;
                 delay = mainWeaponFireDelay;
                 Fire(150.0f);
             }
             if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("Fire"))
             {
+                fire.Play();
                 sideArmCharger -= 1;
                 delay = sideArmFireDelay;
                 Fire(50.0f);

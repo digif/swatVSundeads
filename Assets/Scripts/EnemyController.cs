@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour
         {
             m_Animator.SetFloat("speed", 0);
             m_Animator.SetTrigger("Fall");
+            
         }
         else
         {
