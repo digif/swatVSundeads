@@ -25,16 +25,22 @@ public class Spawner : MonoBehaviour
             enemies.Add(Instantiate(obj2spawn, transform.position, transform.rotation) as GameObject);
             tmp = spawnRate;
         }
+        List<int> fallenEnemies = new List<int>();
         foreach (GameObject enemy in enemies)
         {
             if (enemy.GetComponent<EnemyController>().hasFallen)
             {
                 Debug.Log("beep");
-                enemies.Remove(enemy);
+                fallenEnemies.Add(enemies.IndexOf(enemy));
                 StartCoroutine("Despawn", enemy);
             }
 
         }
+        foreach(int enemy in fallenEnemies)
+        {
+            enemies.RemoveAt(enemy);
+        }
+        fallenEnemies.Clear();
     }
         
 

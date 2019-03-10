@@ -12,9 +12,9 @@ public class EndofGame : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void OnTriggerEnter(Collider other)
+    private void OnColliderEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.tag == "Player")
             SceneManager.LoadScene(3);
 
     }

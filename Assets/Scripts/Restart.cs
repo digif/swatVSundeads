@@ -8,6 +8,8 @@ public class Restart : MonoBehaviour
     // Start is called before the first frame update
     public void restart()
     {
+        Time.timeScale = 1;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

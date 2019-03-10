@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class shooterController : MonoBehaviour
@@ -25,9 +26,9 @@ public class shooterController : MonoBehaviour
 
     
 
-    int ammo;
-    int mainWeaponCharger;
-    int sideArmCharger;
+    static int ammo;
+    static int mainWeaponCharger;
+    static int sideArmCharger;
 
     float mainWeaponFireDelay = 0.1f;
     float sideArmFireDelay = 0.5f;
@@ -40,9 +41,14 @@ public class shooterController : MonoBehaviour
     float delay;
 
     public int playerHp;
+    private float hitDelay;
+
+    public GameObject restartButton;        
+
     // Start is called before the first frame update
     void Start()
     {
+        hitDelay = 1;
         bulletTraceStack = new List<GameObject>();
         delay = 0.0f;
         playerHp = 5;
@@ -57,6 +63,20 @@ public class shooterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hitDelay -= Time.deltaTime;
+
+        ammoUI.text = ammo.ToString();
+        lifeUI.text = playerHp.ToString();
+        if (isMainWeaponSelected)
+        {
+            chargeurUI.text = mainWeaponCharger.ToString();
+        }
+        else
+        {
+            chargeurUI.text = sideArmCharger.ToString();
+        }
+
+
 
         if (delay < Time.deltaTime)
         {
@@ -65,7 +85,11 @@ public class shooterController : MonoBehaviour
                 delay = ReloadDelay;
                 if (isMainWeaponSelected)
                 {
-                    mainWeaponAnimation.Play("reload");
+                    if (ammo > 0)
+                    {
+                        mainWeaponAnimation.Play("reload");
+                    }
+
                     if (ammo > mainWeaponCharger + 30)
                     {
                         ammo -= (30 - mainWeaponCharger);
@@ -104,6 +128,7 @@ public class shooterController : MonoBehaviour
             if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
                 fire.Play();
+                particleMainWeapon.Play();
                 mainWeaponCharger -= 1;
                 delay = mainWeaponFireDelay;
                 Fire(150.0f);
@@ -111,6 +136,7 @@ public class shooterController : MonoBehaviour
             if (!isMainWeaponSelected && sideArmCharger>0 && Input.GetButtonDown("Fire"))
             {
                 fire.Play();
+                particleSideArm.Play();
                 sideArmCharger -= 1;
                 delay = sideArmFireDelay;
                 Fire(50.0f);
@@ -129,15 +155,11 @@ public class shooterController : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
             GameObject target = hit.collider.gameObject;
-            if (target.tag == "enemy")
+            if (target.tag == "enemy" || target.tag == "destructible")
             {
                 target.SendMessage("OnHit");
             }
-            if (target.tag == "destructible")
-            {
-                Destroy(target);
-            }
-            if (target.tag == "environement")
+            if (target.tag == "environement" || target.tag == "destructible")
             {
                 if (bulletTraceStack.Count > 10)
                 {
@@ -150,12 +172,26 @@ public class shooterController : MonoBehaviour
 
     void OnPlayerHit(int damage)
     {
-        playerHp -= damage;
+        if(hitDelay < 0)
+        {
+            hitDelay = 1;
+            playerHp -= damage;
+        }
 
         if (playerHp <= 0)
         {
             Time.timeScale = 0;
-            //deathScreen.SetActive(true);
+            deathScreen.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(restartButton);
+            playerHp = 5;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "ammunition")
+        {
+            ammo = 150 - mainWeaponCharger;
         }
     }
 }

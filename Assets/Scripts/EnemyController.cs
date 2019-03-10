@@ -32,12 +32,12 @@ public class EnemyController : MonoBehaviour
         //Access the Animation clip name
         m_ClipName = m_CurrentClipInfo[0].clip.name;
         Debug.Log(m_ClipName);
-        if (m_ClipName == "Idle" || m_ClipName == "Walk")
+        if (m_ClipName == "Idle" || m_ClipName == "Walk" || m_ClipName == "idle" || m_ClipName == "walk" || m_ClipName == "walk_in_place")
         {
             distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             if (distanceToPlayer < 1.5)
             {
-                //player.SendMessage("OnPlayerHit", damage);
+                player.SendMessage("OnPlayerHit", damage);
                 m_Animator.SetFloat("speed", 0);
                 m_Animator.SetTrigger("Attack");
             }
@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour
             m_Animator.SetFloat("speed", 0);
             m_Animator.SetTrigger("Fall");
             hasFallen = true;
+            GetComponent<CapsuleCollider>().enabled = false;
 
 
         }
