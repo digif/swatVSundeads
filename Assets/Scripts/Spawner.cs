@@ -7,8 +7,10 @@ public class Spawner : MonoBehaviour
     public int maxEnemies = 5;
     public GameObject obj2spawn;
     public float spawnRate;
+
     float tmp;
     List<GameObject> enemies;
+    
     // Start is called before the first frame update
     void Start()
     {

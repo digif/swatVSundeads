@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,57 +6,60 @@ using UnityEngine.UI;
 public class shooterController : MonoBehaviour
 {
     public GameObject deathScreen;
+    public GameObject restartButton;
+
+    public GameObject bulletTrace;
+    public AudioSource fire;
+
     public GameObject mainWeapon;
     public GameObject sideArm;
-    public GameObject bulletTrace;
-
-    List<GameObject> bulletTraceStack;
-
-    bool isMainWeaponSelected;
 
     public Text ammoUI;
     public Text chargeurUI;
     public Text lifeUI;
 
-    public AudioSource fire;
-
     public ParticleSystem particleMainWeapon;
     public ParticleSystem particleSideArm;
 
-    
+    public int playerHp = 5;
+
+
+    float mainWeaponFireDelay = 0.1f;
+    float sideArmFireDelay = 0.5f;
+    float ReloadDelay = 3.0f;
+    float changeWeaponDelay = 1.0f;
+
+    Animation mainWeaponAnimation;
+    Animation sideArmAnimation;
+
+    List<GameObject> bulletTraceStack;
 
     static int ammo;
     static int mainWeaponCharger;
     static int sideArmCharger;
 
-    float mainWeaponFireDelay = 0.1f;
-    float sideArmFireDelay = 0.5f;
-    float ReloadDelay = 3.0f;
-    float changeWeaponDelay = 1.0f; 
-
-    Animation mainWeaponAnimation;
-    Animation sideArmAnimation;
-
     float delay;
+    float hitDelay;
 
-    public int playerHp;
-    private float hitDelay;
+    bool isMainWeaponSelected;
 
-    public GameObject restartButton;        
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        hitDelay = 1;
-        bulletTraceStack = new List<GameObject>();
-        delay = 0.0f;
-        playerHp = 5;
-        isMainWeaponSelected = true;
         mainWeaponAnimation = mainWeapon.GetComponent<Animation>();
         sideArmAnimation = sideArm.GetComponent<Animation>();
+
+        ammo = 120;
         mainWeaponCharger = 30;
         sideArmCharger = 12;
-        ammo = 120;
+
+        bulletTraceStack = new List<GameObject>();
+
+        delay = 0.0f;
+        hitDelay = 1;
+
+        isMainWeaponSelected = true;
     }
 
     // Update is called once per frame
@@ -75,7 +77,6 @@ public class shooterController : MonoBehaviour
         {
             chargeurUI.text = sideArmCharger.ToString();
         }
-
 
 
         if (delay < Time.deltaTime)
@@ -107,14 +108,13 @@ public class shooterController : MonoBehaviour
                     sideArmCharger = 12;
                 }
             }
+
             if (Input.GetButtonDown("ChangeWeapon"))
             {
-                Debug.Log(isMainWeaponSelected.ToString());
                 delay = changeWeaponDelay;
                 isMainWeaponSelected = !isMainWeaponSelected;
                 mainWeapon.SetActive(!mainWeapon.activeInHierarchy);
                 sideArm.SetActive(!sideArm.activeInHierarchy);
-                Debug.Log(isMainWeaponSelected.ToString());
                 if (isMainWeaponSelected)
                 {
                     mainWeaponAnimation.Play("draw");
@@ -125,6 +125,7 @@ public class shooterController : MonoBehaviour
                     sideArmAnimation.Play("draw");
                 }
             }
+
             if (isMainWeaponSelected && mainWeaponCharger>0 && Input.GetButton("Fire"))
             {
                 fire.Play();
@@ -141,7 +142,6 @@ public class shooterController : MonoBehaviour
                 delay = sideArmFireDelay;
                 Fire(50.0f);
             }
-
         }
         else
         {

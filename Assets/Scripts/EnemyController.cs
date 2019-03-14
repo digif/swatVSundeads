@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -7,14 +6,9 @@ public class EnemyController : MonoBehaviour
     public int hp = 1;
     public int damage = 1;
 
+    private NavMeshAgent m_agent;
     private Animator m_Animator;
     private GameObject player;
-    private bool startMouseRotate;
-    private Vector3 prevMousePosition;
-    private AnimatorClipInfo[] m_CurrentClipInfo;
-    private string m_ClipName;
-    private float distanceToPlayer;
-    private NavMeshAgent m_agent;
 
     public bool hasFallen { get; private set; }
 
@@ -28,13 +22,13 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
+        AnimatorClipInfo[] m_CurrentClipInfo = m_Animator.GetCurrentAnimatorClipInfo(0);
         //Access the Animation clip name
-        m_ClipName = m_CurrentClipInfo[0].clip.name;
+        string m_ClipName = m_CurrentClipInfo[0].clip.name;
         Debug.Log(m_ClipName);
         if (m_ClipName == "Idle" || m_ClipName == "Walk" || m_ClipName == "idle" || m_ClipName == "walk" || m_ClipName == "walk_in_place")
         {
-            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             if (distanceToPlayer < 1.5)
             {
                 player.SendMessage("OnPlayerHit", damage);
@@ -58,8 +52,6 @@ public class EnemyController : MonoBehaviour
             m_Animator.SetTrigger("Fall");
             hasFallen = true;
             GetComponent<CapsuleCollider>().enabled = false;
-
-
         }
         else
         {
