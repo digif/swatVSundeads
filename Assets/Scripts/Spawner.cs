@@ -32,11 +32,9 @@ public class Spawner : MonoBehaviour
         {
             if (enemy.GetComponent<EnemyController>().hasFallen)
             {
-                Debug.Log("beep");
                 fallenEnemies.Add(enemies.IndexOf(enemy));
                 StartCoroutine("Despawn", enemy);
             }
-
         }
         foreach(int enemy in fallenEnemies)
         {
@@ -47,13 +45,11 @@ public class Spawner : MonoBehaviour
         
 
     IEnumerator Despawn(GameObject enemy)
-    {
-        
+    {   
         for (float temp = 3; temp > Time.deltaTime; temp -= Time.deltaTime)
         {
             yield return null;
         }
-        Debug.Log("boop");
         Destroy(enemy);
     }
 }
