@@ -463,14 +463,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 400000}
     m_Modifications:
-    - target: {fileID: 100014, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
-      propertyPath: m_Name
-      value: m9_fp
-      objectReference: {fileID: 0}
-    - target: {fileID: 100014, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -515,6 +507,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
+      propertyPath: m_Name
+      value: m9_fp
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d5fb5d404e16dc4a9089b87d7db4ac4, type: 3}
 --- !u!1 &756888156578912958 stripped
@@ -542,14 +542,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 400000}
     m_Modifications:
-    - target: {fileID: 100100, guid: 491a2f04490f74649909790d7c582e59, type: 3}
-      propertyPath: m_Name
-      value: acr_fp
-      objectReference: {fileID: 0}
-    - target: {fileID: 100100, guid: 491a2f04490f74649909790d7c582e59, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400100, guid: 491a2f04490f74649909790d7c582e59, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -593,6 +585,10 @@ PrefabInstance:
     - target: {fileID: 400100, guid: 491a2f04490f74649909790d7c582e59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100100, guid: 491a2f04490f74649909790d7c582e59, type: 3}
+      propertyPath: m_Name
+      value: acr_fp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 491a2f04490f74649909790d7c582e59, type: 3}
